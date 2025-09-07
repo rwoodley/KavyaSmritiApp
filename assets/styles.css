@@ -1,0 +1,362 @@
+/* Using system fonts for immediate functionality */
+
+:root {
+  --verse-scale: 1;
+  
+  /* Dark theme colors */
+  --bg-color: #1a1a1a;
+  --text-color: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --accent-color: #4a9eff;
+  --border-color: #333;
+  --toolbar-bg: #2a2a2a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+/* Verse page specific styles */
+#verse-header {
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--bg-color);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+#verse-header h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+#verse-header a {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+#verse-header a:hover {
+  text-decoration: underline;
+}
+
+#verse-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: calc(100vh - 120px);
+}
+
+/* Sticky toolbar at bottom */
+#toolbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  min-height: 60px;
+  background-color: var(--toolbar-bg);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  z-index: 10;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  scrollbar-width: thin; /* Thin scrollbar on Firefox */
+}
+
+/* Hide scrollbar on webkit browsers but keep functionality */
+#toolbar::-webkit-scrollbar {
+  height: 3px;
+}
+
+#toolbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#toolbar::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+#toolbar::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+#toolbar button {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  min-width: 60px;
+  flex-shrink: 0;
+  margin-right: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+#toolbar button:last-child {
+  margin-right: 0;
+}
+
+#toolbar button:disabled {
+  background-color: var(--border-color);
+  color: var(--text-secondary);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+#toolbar button:hover:not(:disabled) {
+  background-color: #357abd;
+}
+
+#toolbar button[data-playing="true"] {
+  background-color: #28a745;
+}
+
+#toolbar button[data-playing="true"]:hover {
+  background-color: #218838;
+}
+
+/* Hide default audio controls */
+audio {
+  display: none !important;
+}
+
+.content-section {
+  margin: 2rem 0;
+  padding: 1rem;
+  border-left: 3px solid var(--accent-color);
+  background-color: rgba(74, 158, 255, 0.05);
+  font-size: calc(1rem * var(--verse-scale));
+}
+
+/* Hindi content uses Devanagari system fonts */
+#hindi-container {
+  font-family: "Noto Sans Devanagari", "Mangal", "Nirmala UI", "Devanagari Sangam MN", system-ui, sans-serif;
+}
+
+/* Transliteration and English use system font stack */
+#translit-container,
+#english-container {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, sans-serif;
+}
+
+/* Explanation uses system font stack */
+#explanation-container {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, sans-serif;
+}
+
+.line {
+  margin-bottom: 0.5rem;
+  line-height: 1.8;
+  font-size: calc(1.1rem * var(--verse-scale));
+}
+
+.line:last-child {
+  margin-bottom: 0;
+}
+
+.english-text {
+  font-size: calc(1.1rem * var(--verse-scale));
+  line-height: 1.8;
+  color: var(--text-color);
+}
+
+.placeholder {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  text-align: center;
+  padding: 1rem;
+  opacity: 0.7;
+}
+
+.explanation {
+  font-size: calc(1rem * var(--verse-scale));
+  line-height: 1.7;
+  color: var(--text-color);
+}
+
+.explanation h1,
+.explanation h2,
+.explanation h3,
+.explanation h4,
+.explanation h5,
+.explanation h6 {
+  color: var(--accent-color);
+  margin: 1.5rem 0 1rem 0;
+  font-weight: 500;
+}
+
+.explanation h1 { font-size: calc(1.5rem * var(--verse-scale)); }
+.explanation h2 { font-size: calc(1.3rem * var(--verse-scale)); }
+.explanation h3 { font-size: calc(1.2rem * var(--verse-scale)); }
+.explanation h4 { font-size: calc(1.1rem * var(--verse-scale)); }
+.explanation h5 { font-size: calc(1rem * var(--verse-scale)); }
+.explanation h6 { font-size: calc(0.9rem * var(--verse-scale)); }
+
+.explanation p {
+  margin: 1rem 0;
+  color: var(--text-color);
+}
+
+.explanation ul,
+.explanation ol {
+  margin: 1rem 0;
+  padding-left: 2rem;
+}
+
+.explanation li {
+  margin: 0.5rem 0;
+}
+
+.explanation blockquote {
+  border-left: 4px solid var(--accent-color);
+  padding-left: 1rem;
+  margin: 1rem 0;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+.explanation code {
+  background-color: var(--border-color);
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  font-family: 'Courier New', monospace;
+  font-size: calc(0.9rem * var(--verse-scale));
+}
+
+.explanation pre {
+  background-color: var(--border-color);
+  padding: 1rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.explanation pre code {
+  background: none;
+  padding: 0;
+}
+
+.explanation a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+.explanation a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  #toolbar {
+    justify-content: flex-start;
+    padding: 0.5rem;
+    min-height: 50px;
+  }
+  
+  #toolbar button {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+    min-width: 50px;
+    margin-right: 0.25rem;
+  }
+  
+  #verse-header {
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+  }
+  
+  #verse-header h2 {
+    font-size: 1.25rem;
+  }
+  
+  #verse-main {
+    padding: 1rem;
+    min-height: calc(100vh - 100px); /* Account for smaller toolbar */
+  }
+  
+  .content-section {
+    margin: 1rem 0;
+    padding: 0.75rem;
+    border-left-width: 2px;
+  }
+  
+  .line {
+    font-size: calc(1rem * var(--verse-scale));
+    line-height: 1.6;
+  }
+  
+  .english-text {
+    font-size: calc(1rem * var(--verse-scale));
+  }
+}
+
+@media (max-width: 360px) {
+  #toolbar {
+    padding: 0.25rem;
+    min-height: 45px;
+  }
+  
+  #toolbar button {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.75rem;
+    min-width: 45px;
+    margin-right: 0.2rem;
+  }
+  
+  #verse-header {
+    padding: 0.75rem;
+  }
+  
+  #verse-main {
+    padding: 0.75rem;
+  }
+  
+  .content-section {
+    margin: 0.75rem 0;
+    padding: 0.5rem;
+  }
+}

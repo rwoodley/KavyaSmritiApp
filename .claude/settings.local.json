@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "WebFetch(domain:cdn.jsdelivr.net)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
