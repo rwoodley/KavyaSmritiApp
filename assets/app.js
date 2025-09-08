@@ -417,9 +417,9 @@ export async function initVerse() {
   const verse = manifest.verses[verseIndex];
   const prevId = verseIndex > 0 ? manifest.verses[verseIndex - 1].id : null;
   const nextId = verseIndex < manifest.verses.length - 1 ? manifest.verses[verseIndex + 1].id : null;
-  
-  const displayName = verse.title || verse.number || verse.id;
-  
+
+  const displayName = "Verse: " + (verse.title || verse.number || verse.id);
+
   headerEl.innerHTML = `
     <h2>${displayName}</h2>
     <a href="index.html">← Home</a>
