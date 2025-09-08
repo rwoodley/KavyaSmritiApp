@@ -123,7 +123,7 @@ p {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  padding-bottom: 140px; /* Space for two-row toolbar */
+  padding-bottom: 180px; /* Space for taller two-row toolbar */
   min-height: calc(100vh - 120px);
 }
 
@@ -133,7 +133,7 @@ p {
   bottom: 0;
   left: 0;
   right: 0;
-  min-height: 120px;
+  min-height: 160px;
   background-color: var(--toolbar-bg);
   border-top: 1px solid var(--border-color);
   display: flex;
@@ -170,18 +170,23 @@ p {
   width: 100%;
 }
 
+.toolbar-row button {
+  flex: 1;
+}
+
 #toolbar button {
   background-color: var(--accent-color);
   color: white;
   border: none;
-  padding: 0.5rem 0.75rem;
+  padding: 0.75rem 1.5rem;
   border-radius: 4px;
   font-size: 0.85rem;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
   font-weight: 500;
   cursor: pointer;
   white-space: nowrap;
-  min-width: 60px;
+  min-width: 120px;
+  min-height: 60px;
   flex-shrink: 0;
   transition: background-color 0.2s ease;
 }
@@ -192,7 +197,7 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 40px;
+  min-height: 60px; /* Match the new button height */
 }
 
 /* Make speaker and speech bubble icons even larger */
@@ -376,20 +381,21 @@ audio {
   
   #toolbar {
     padding: 0.5rem;
-    min-height: 100px;
+    min-height: 130px;
     gap: 0.25rem;
   }
   
   #toolbar button {
-    padding: 0.4rem 0.6rem;
+    padding: 0.6rem 1.2rem;
     font-size: 0.8rem;
-    min-width: 50px;
+    min-width: 100px;
+    min-height: 50px;
   }
   
   /* Keep all first row buttons consistent on mobile */
   .toolbar-row:first-child button {
     font-size: 1.2rem;
-    min-height: 36px;
+    min-height: 50px;
   }
   
   /* Make speaker and speech bubble icons larger on mobile */
@@ -417,7 +423,7 @@ audio {
   
   #verse-main {
     padding: 1rem;
-    padding-bottom: 120px; /* Space for mobile two-row toolbar */
+    padding-bottom: 140px; /* Space for mobile two-row toolbar */
     min-height: calc(100vh - 140px); /* Account for two-row toolbar */
   }
   
@@ -460,20 +466,21 @@ audio {
   
   #toolbar {
     padding: 0.25rem;
-    min-height: 90px;
+    min-height: 120px;
     gap: 0.2rem;
   }
   
   #toolbar button {
-    padding: 0.3rem 0.5rem;
+    padding: 0.45rem 1rem;
     font-size: 0.75rem;
-    min-width: 45px;
+    min-width: 90px;
+    min-height: 45px;
   }
   
   /* Keep all first row buttons consistent on very small screens */
   .toolbar-row:first-child button {
     font-size: 1.125rem;
-    min-height: 32px;
+    min-height: 45px;
   }
   
   /* Make speaker and speech bubble icons larger on very small screens */
@@ -494,7 +501,7 @@ audio {
   
   #verse-main {
     padding: 0.75rem;
-    padding-bottom: 110px; /* Space for very small screen toolbar */
+    padding-bottom: 130px; /* Space for very small screen toolbar */
   }
   
   .content-section {
