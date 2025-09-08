@@ -75,6 +75,7 @@ p {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+  padding-bottom: 140px; /* Space for two-row toolbar */
   min-height: calc(100vh - 120px);
 }
 
@@ -84,19 +85,14 @@ p {
   bottom: 0;
   left: 0;
   right: 0;
-  min-height: 60px;
+  min-height: 120px;
   background-color: var(--toolbar-bg);
   border-top: 1px solid var(--border-color);
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
   padding: 0.75rem 1rem;
-  overflow-x: auto;
-  overflow-y: hidden;
   z-index: 10;
-  white-space: nowrap;
-  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-  scrollbar-width: thin; /* Thin scrollbar on Firefox */
+  gap: 0.5rem;
 }
 
 /* Hide scrollbar on webkit browsers but keep functionality */
@@ -117,6 +113,15 @@ p {
   background: var(--text-secondary);
 }
 
+.toolbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  width: 100%;
+}
+
 #toolbar button {
   background-color: var(--accent-color);
   color: white;
@@ -130,12 +135,16 @@ p {
   white-space: nowrap;
   min-width: 60px;
   flex-shrink: 0;
-  margin-right: 0.5rem;
   transition: background-color 0.2s ease;
 }
 
-#toolbar button:last-child {
-  margin-right: 0;
+/* Make all first row buttons consistent height */
+.toolbar-row:first-child button {
+  font-size: 1.275rem; /* Larger size for better consistency */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
 }
 
 #toolbar button:disabled {
@@ -290,16 +299,25 @@ audio {
 
 @media (max-width: 480px) {
   #toolbar {
-    justify-content: flex-start;
     padding: 0.5rem;
-    min-height: 50px;
+    min-height: 100px;
+    gap: 0.25rem;
   }
   
   #toolbar button {
     padding: 0.4rem 0.6rem;
     font-size: 0.8rem;
     min-width: 50px;
-    margin-right: 0.25rem;
+  }
+  
+  /* Keep all first row buttons consistent on mobile */
+  .toolbar-row:first-child button {
+    font-size: 1.2rem;
+    min-height: 36px;
+  }
+  
+  .toolbar-row {
+    gap: 0.25rem;
   }
   
   #verse-header {
@@ -315,7 +333,8 @@ audio {
   
   #verse-main {
     padding: 1rem;
-    min-height: calc(100vh - 100px); /* Account for smaller toolbar */
+    padding-bottom: 120px; /* Space for mobile two-row toolbar */
+    min-height: calc(100vh - 140px); /* Account for two-row toolbar */
   }
   
   .content-section {
@@ -337,14 +356,24 @@ audio {
 @media (max-width: 360px) {
   #toolbar {
     padding: 0.25rem;
-    min-height: 45px;
+    min-height: 90px;
+    gap: 0.2rem;
   }
   
   #toolbar button {
     padding: 0.3rem 0.5rem;
     font-size: 0.75rem;
     min-width: 45px;
-    margin-right: 0.2rem;
+  }
+  
+  /* Keep all first row buttons consistent on very small screens */
+  .toolbar-row:first-child button {
+    font-size: 1.125rem;
+    min-height: 32px;
+  }
+  
+  .toolbar-row {
+    gap: 0.2rem;
   }
   
   #verse-header {
@@ -353,6 +382,7 @@ audio {
   
   #verse-main {
     padding: 0.75rem;
+    padding-bottom: 110px; /* Space for very small screen toolbar */
   }
   
   .content-section {

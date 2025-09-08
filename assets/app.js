@@ -629,7 +629,7 @@ async function toggleSpeak() {
     if (!audio.paused && !audio.ended) {
       audio.pause();
       speakBtn.dataset.playing = 'false';
-      speakBtn.textContent = 'Speak';
+      speakBtn.textContent = '🔊';
       return;
     }
     
@@ -641,14 +641,14 @@ async function toggleSpeak() {
     
     // Try to play the audio
     speakBtn.dataset.playing = 'true';
-    speakBtn.textContent = 'Pause';
+    speakBtn.textContent = '🔊';
     
     await audio.play();
     
     // Set up event listeners for when audio ends
     audio.addEventListener('ended', () => {
       speakBtn.dataset.playing = 'false';
-      speakBtn.textContent = 'Speak';
+      speakBtn.textContent = '🔊';
     }, { once: true });
     
   } catch (error) {
@@ -675,7 +675,7 @@ async function toggleSpeak() {
     
     // Reset button state
     speakBtn.dataset.playing = 'false';
-    speakBtn.textContent = 'Speak';
+    speakBtn.textContent = '🔊';
   }
 }
 

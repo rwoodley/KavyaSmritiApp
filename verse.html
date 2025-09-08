@@ -11,16 +11,20 @@
   <main id="verse-main"></main>
   
   <nav id="toolbar" class="toolbar">
-    <button data-action="toggleHindi" aria-label="Toggle Hindi text" title="Show/hide Hindi text">Hindi</button>
-    <button data-action="toggleSpeak" aria-label="Toggle speech playback" title="Play/pause audio">Speak</button>
-    <button data-action="toggleTranslit" aria-label="Toggle transliteration" title="Show/hide transliteration">Translit</button>
-    <button data-action="toggleEnglish" aria-label="Toggle English translation" title="Show/hide English translation">English</button>
-    <button data-action="toggleAll" aria-label="Toggle all text layers" title="Show/hide all text layers">All</button>
-    <button data-action="toggleExplanation" aria-label="Toggle explanation" title="Show/hide explanation">Explanation</button>
-    <button data-action="goPrev" aria-label="Go to previous verse" title="Previous verse">Prev</button>
-    <button data-action="goNext" aria-label="Go to next verse" title="Next verse">Next</button>
-    <button data-action="decScale" aria-label="Decrease text size" title="Decrease text size">A−</button>
-    <button data-action="incScale" aria-label="Increase text size" title="Increase text size">A+</button>
+    <div class="toolbar-row">
+      <button data-action="toggleSpeak" aria-label="Toggle speech playback" title="Play/pause audio">🔊</button>
+      <button data-action="toggleHindi" aria-label="Toggle Hindi text" title="Show/hide Hindi text">ॐ</button>
+      <button data-action="toggleTranslit" aria-label="Toggle transliteration" title="Show/hide transliteration">💬</button>
+      <button data-action="toggleEnglish" aria-label="Toggle English translation" title="Show/hide English translation">Aa</button>
+      <button data-action="toggleAll" aria-label="Toggle all text layers" title="Show/hide all text layers">All</button>
+      <button data-action="toggleExplanation" aria-label="Toggle explanation" title="Show/hide explanation">Info</button>
+    </div>
+    <div class="toolbar-row">
+      <button data-action="goPrev" aria-label="Go to previous verse" title="Previous verse"><</button>
+      <button data-action="goNext" aria-label="Go to next verse" title="Next verse">></button>
+      <button data-action="decScale" aria-label="Decrease text size" title="Decrease text size">A−</button>
+      <button data-action="incScale" aria-label="Increase text size" title="Increase text size">A+</button>
+    </div>
   </nav>
   
   <script type="module">
