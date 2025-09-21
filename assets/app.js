@@ -376,6 +376,7 @@ export async function initHome() {
   const verseListEl = document.getElementById('verse-list');
   const selectBtn = document.getElementById('select-btn');
   const playSelectedBtn = document.getElementById('play-selected-btn');
+  const replaySelectedBtn = document.getElementById('replay-selected-btn');
 
   if (!manifest) {
     poemTitleEl.innerHTML = '<p style="color: var(--text-secondary);">Unable to load poem manifest. Please check that the data file is available.</p>';
@@ -403,10 +404,12 @@ export async function initHome() {
       selectBtn.textContent = 'Done';
       selectBtn.classList.add('active');
       playSelectedBtn.style.display = 'block';
+      replaySelectedBtn.style.display = 'block';
     } else {
       selectBtn.textContent = 'Select';
       selectBtn.classList.remove('active');
       playSelectedBtn.style.display = 'none';
+      replaySelectedBtn.style.display = 'none';
       // Clear all selections
       selectedVerses.clear();
       document.querySelectorAll('#verse-list a.selected').forEach(link => {
@@ -436,31 +439,13 @@ export async function initHome() {
     // If not in select mode, allow normal navigation
   });
 
-  // Play selected verses functionality
-  playSelectedBtn.addEventListener('click', async () => {
+  // Function to start playback from beginning
+  async function startPlaybackFromBeginning() {
     if (selectedVerses.size === 0) {
       return; // No verses selected
     }
 
     const audio = getAudioElement();
-
-    // If currently playing, pause
-    if (isPlaying) {
-      audio.pause();
-      isPlaying = false;
-      playSelectedBtn.textContent = '🔊';
-      return;
-    }
-
-    // If audio is paused and has content, resume
-    if (audio.paused && !audio.ended && audio.src) {
-      isPlaying = true;
-      playSelectedBtn.textContent = '⏸️';
-      await audio.play();
-      return;
-    }
-
-    // Start new playback sequence
     const selectedIds = Array.from(selectedVerses);
 
     // Sort selected verse IDs by their order in the manifest
@@ -509,6 +494,51 @@ export async function initHome() {
       isPlaying = false;
       playSelectedBtn.textContent = '🔊'; // Reset to speaker icon
     }
+  }
+
+  // Play selected verses functionality
+  playSelectedBtn.addEventListener('click', async () => {
+    if (selectedVerses.size === 0) {
+      return; // No verses selected
+    }
+
+    const audio = getAudioElement();
+
+    // If currently playing, pause
+    if (isPlaying) {
+      audio.pause();
+      isPlaying = false;
+      playSelectedBtn.textContent = '🔊';
+      return;
+    }
+
+    // If audio is paused and has content, resume
+    if (audio.paused && !audio.ended && audio.src) {
+      isPlaying = true;
+      playSelectedBtn.textContent = '⏸️';
+      await audio.play();
+      return;
+    }
+
+    // Start new playback sequence
+    await startPlaybackFromBeginning();
+  });
+
+  // Replay selected verses functionality
+  replaySelectedBtn.addEventListener('click', async () => {
+    if (selectedVerses.size === 0) {
+      return; // No verses selected
+    }
+
+    // Stop current playback if playing
+    if (isPlaying) {
+      const audio = getAudioElement();
+      audio.pause();
+      isPlaying = false;
+    }
+
+    // Always start from beginning
+    await startPlaybackFromBeginning();
   });
 }
 
