@@ -377,6 +377,7 @@ export async function initHome() {
   const selectBtn = document.getElementById('select-btn');
   const playSelectedBtn = document.getElementById('play-selected-btn');
   const replaySelectedBtn = document.getElementById('replay-selected-btn');
+  const loopSelectedBtn = document.getElementById('loop-selected-btn');
 
   if (!manifest) {
     poemTitleEl.innerHTML = '<p style="color: var(--text-secondary);">Unable to load poem manifest. Please check that the data file is available.</p>';
@@ -395,6 +396,7 @@ export async function initHome() {
   let isSelectMode = false;
   const selectedVerses = new Set();
   let isPlaying = false;
+  let isLooping = false;
 
   // Select button functionality
   selectBtn.addEventListener('click', () => {
@@ -405,13 +407,17 @@ export async function initHome() {
       selectBtn.classList.add('active');
       playSelectedBtn.style.display = 'block';
       replaySelectedBtn.style.display = 'block';
+      loopSelectedBtn.style.display = 'block';
     } else {
       selectBtn.textContent = 'Select';
       selectBtn.classList.remove('active');
       playSelectedBtn.style.display = 'none';
       replaySelectedBtn.style.display = 'none';
-      // Clear all selections
+      loopSelectedBtn.style.display = 'none';
+      // Clear all selections and states
       selectedVerses.clear();
+      isLooping = false;
+      loopSelectedBtn.classList.remove('active');
       document.querySelectorAll('#verse-list a.selected').forEach(link => {
         link.classList.remove('selected');
       });
@@ -459,40 +465,42 @@ export async function initHome() {
     playSelectedBtn.textContent = '⏸️'; // Change to pause icon
 
     try {
-      for (const verseId of sortedIds) {
-        if (!isPlaying) break; // User clicked pause
+      do {
+        for (const verseId of sortedIds) {
+          if (!isPlaying) break; // User clicked pause
 
-        const audioSrc = `/data/Verse${verseId}.mp3`;
-        audio.src = audioSrc;
+          const audioSrc = `/data/Verse${verseId}.mp3`;
+          audio.src = audioSrc;
 
-        // Wait for the audio to load and play
-        await new Promise((resolve, reject) => {
-          const onEnded = () => {
-            audio.removeEventListener('ended', onEnded);
-            audio.removeEventListener('error', onError);
-            resolve();
-          };
+          // Wait for the audio to load and play
+          await new Promise((resolve, reject) => {
+            const onEnded = () => {
+              audio.removeEventListener('ended', onEnded);
+              audio.removeEventListener('error', onError);
+              resolve();
+            };
 
-          const onError = () => {
-            audio.removeEventListener('ended', onEnded);
-            audio.removeEventListener('error', onError);
-            console.warn(`Audio not available for verse ${verseId}`);
-            resolve(); // Continue to next verse even if this one fails
-          };
+            const onError = () => {
+              audio.removeEventListener('ended', onEnded);
+              audio.removeEventListener('error', onError);
+              console.warn(`Audio not available for verse ${verseId}`);
+              resolve(); // Continue to next verse even if this one fails
+            };
 
-          audio.addEventListener('ended', onEnded);
-          audio.addEventListener('error', onError);
+            audio.addEventListener('ended', onEnded);
+            audio.addEventListener('error', onError);
 
-          audio.play().catch(() => {
-            onError();
+            audio.play().catch(() => {
+              onError();
+            });
           });
-        });
-      }
+        }
+      } while (isLooping && isPlaying); // Continue looping if loop is enabled and not paused
     } catch (error) {
       console.error('Error playing selected verses:', error);
     } finally {
       isPlaying = false;
-      playSelectedBtn.textContent = '🔊'; // Reset to speaker icon
+      playSelectedBtn.textContent = '▶️'; // Reset to play icon
     }
   }
 
@@ -508,7 +516,7 @@ export async function initHome() {
     if (isPlaying) {
       audio.pause();
       isPlaying = false;
-      playSelectedBtn.textContent = '🔊';
+      playSelectedBtn.textContent = '▶️';
       return;
     }
 
@@ -539,6 +547,17 @@ export async function initHome() {
 
     // Always start from beginning
     await startPlaybackFromBeginning();
+  });
+
+  // Loop button functionality
+  loopSelectedBtn.addEventListener('click', () => {
+    isLooping = !isLooping;
+
+    if (isLooping) {
+      loopSelectedBtn.classList.add('active');
+    } else {
+      loopSelectedBtn.classList.remove('active');
+    }
   });
 }
 
