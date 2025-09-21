@@ -393,6 +393,7 @@ export async function initHome() {
   // Selection mode state
   let isSelectMode = false;
   const selectedVerses = new Set();
+  let isPlaying = false;
 
   // Select button functionality
   selectBtn.addEventListener('click', () => {
@@ -442,6 +443,24 @@ export async function initHome() {
     }
 
     const audio = getAudioElement();
+
+    // If currently playing, pause
+    if (isPlaying) {
+      audio.pause();
+      isPlaying = false;
+      playSelectedBtn.textContent = '🔊';
+      return;
+    }
+
+    // If audio is paused and has content, resume
+    if (audio.paused && !audio.ended && audio.src) {
+      isPlaying = true;
+      playSelectedBtn.textContent = '⏸️';
+      await audio.play();
+      return;
+    }
+
+    // Start new playback sequence
     const selectedIds = Array.from(selectedVerses);
 
     // Sort selected verse IDs by their order in the manifest
@@ -451,10 +470,13 @@ export async function initHome() {
       return indexA - indexB;
     });
 
+    isPlaying = true;
     playSelectedBtn.textContent = '⏸️'; // Change to pause icon
 
     try {
       for (const verseId of sortedIds) {
+        if (!isPlaying) break; // User clicked pause
+
         const audioSrc = `/data/Verse${verseId}.mp3`;
         audio.src = audioSrc;
 
@@ -484,6 +506,7 @@ export async function initHome() {
     } catch (error) {
       console.error('Error playing selected verses:', error);
     } finally {
+      isPlaying = false;
       playSelectedBtn.textContent = '🔊'; // Reset to speaker icon
     }
   });
