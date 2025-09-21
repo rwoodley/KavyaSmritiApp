@@ -539,15 +539,39 @@ export async function initHome() {
       return; // No verses selected
     }
 
-    // Stop current playback if playing
+    const audio = getAudioElement();
+    const wasPlaying = isPlaying;
+
+    // Always stop current playback first and reset audio
     if (isPlaying) {
-      const audio = getAudioElement();
       audio.pause();
       isPlaying = false;
     }
 
-    // Always start from beginning
-    await startPlaybackFromBeginning();
+    // Reset audio completely
+    audio.src = '';
+    audio.currentTime = 0;
+
+    // If it was playing, restart from beginning and continue playing
+    if (wasPlaying) {
+      await startPlaybackFromBeginning();
+    } else {
+      // If it wasn't playing, just reset to the first verse but don't start playing
+      const selectedIds = Array.from(selectedVerses);
+      const sortedIds = selectedIds.sort((a, b) => {
+        const indexA = manifest.verses.findIndex(v => v.id === a);
+        const indexB = manifest.verses.findIndex(v => v.id === b);
+        return indexA - indexB;
+      });
+
+      if (sortedIds.length > 0) {
+        // Set audio source to first verse but don't play
+        const firstVerseId = sortedIds[0];
+        const audioSrc = `/data/Verse${firstVerseId}.mp3`;
+        audio.src = audioSrc;
+        audio.currentTime = 0;
+      }
+    }
   });
 
   // Loop button functionality
