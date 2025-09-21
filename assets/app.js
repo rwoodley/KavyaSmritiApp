@@ -421,8 +421,7 @@ export async function initVerse() {
   const displayName = "Verse: " + (verse.title || verse.number || verse.id);
 
   headerEl.innerHTML = `
-    <h2>${displayName}</h2>
-    <a href="index.html">← Home</a>
+   <a href="index.html"><h2>${displayName}</h2></a>
   `;
   
   // Update disabled state of navigation buttons
