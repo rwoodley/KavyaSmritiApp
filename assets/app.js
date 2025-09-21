@@ -370,23 +370,70 @@ async function renderExplanation(container, markdown) {
 
 export async function initHome() {
   console.log('initHome');
-  
+
   const manifest = await loadManifest();
   const poemTitleEl = document.getElementById('poem-title');
   const verseListEl = document.getElementById('verse-list');
-  
+  const selectBtn = document.getElementById('select-btn');
+  const playSelectedBtn = document.getElementById('play-selected-btn');
+
   if (!manifest) {
     poemTitleEl.innerHTML = '<p style="color: var(--text-secondary);">Unable to load poem manifest. Please check that the data file is available.</p>';
     return;
   }
-  
+
   poemTitleEl.innerHTML = `<h2>${manifest.poemTitle}</h2>`;
-  
+
   verseListEl.innerHTML = manifest.verses
-    .map((verse, index) => 
-      `<li><a href="verse.html?id=${encodeURIComponent(verse.id)}">${displayNameFor(verse, index)}</a></li>`
+    .map((verse, index) =>
+      `<li><a href="verse.html?id=${encodeURIComponent(verse.id)}" data-verse-id="${verse.id}">${displayNameFor(verse, index)}</a></li>`
     )
     .join('');
+
+  // Selection mode state
+  let isSelectMode = false;
+  const selectedVerses = new Set();
+
+  // Select button functionality
+  selectBtn.addEventListener('click', () => {
+    isSelectMode = !isSelectMode;
+
+    if (isSelectMode) {
+      selectBtn.textContent = 'Done';
+      selectBtn.classList.add('active');
+      playSelectedBtn.style.display = 'block';
+    } else {
+      selectBtn.textContent = 'Select';
+      selectBtn.classList.remove('active');
+      playSelectedBtn.style.display = 'none';
+      // Clear all selections
+      selectedVerses.clear();
+      document.querySelectorAll('#verse-list a.selected').forEach(link => {
+        link.classList.remove('selected');
+      });
+    }
+  });
+
+  // Verse list click handling
+  verseListEl.addEventListener('click', (e) => {
+    const link = e.target.closest('a');
+    if (!link) return;
+
+    if (isSelectMode) {
+      e.preventDefault(); // Prevent navigation
+
+      const verseId = link.dataset.verseId;
+
+      if (selectedVerses.has(verseId)) {
+        selectedVerses.delete(verseId);
+        link.classList.remove('selected');
+      } else {
+        selectedVerses.add(verseId);
+        link.classList.add('selected');
+      }
+    }
+    // If not in select mode, allow normal navigation
+  });
 }
 
 export async function initVerse() {

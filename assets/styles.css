@@ -93,6 +93,77 @@ p {
   transform: translateY(0);
 }
 
+/* Poem header layout */
+#poem-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 1rem;
+}
+
+#poem-title {
+  flex: 1;
+}
+
+/* Select controls */
+#select-controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+#select-btn {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  touch-action: manipulation;
+}
+
+#select-btn:hover {
+  background-color: #357abd;
+}
+
+#select-btn.active {
+  background-color: #28a745;
+}
+
+#play-selected-btn {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  touch-action: manipulation;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 50px;
+}
+
+#play-selected-btn:hover {
+  background-color: #357abd;
+}
+
+/* Selected verse styling */
+#verse-list a.selected {
+  background-color: #28a745 !important;
+}
+
+#verse-list a.selected:hover {
+  background-color: #218838 !important;
+}
+
 /* Verse page specific styles */
 #verse-header {
   padding: 1rem 2rem;
