@@ -13,13 +13,17 @@
       <div id="poem-title"></div>
       <div id="select-controls">
         <button id="select-btn">Select</button>
-        <button id="play-selected-btn" style="display: none;">▶️</button>
-        <button id="replay-selected-btn" style="display: none;">⏮️</button>
-        <button id="loop-selected-btn" style="display: none;">🔁</button>
       </div>
     </div>
     <ul id="verse-list"></ul>
   </main>
+
+  <!-- Selection footer -->
+  <footer id="selection-footer" style="display: none;">
+    <button id="play-selected-btn">▶️</button>
+    <button id="replay-selected-btn">⏮️</button>
+    <button id="loop-selected-btn">🔁</button>
+  </footer>
   
   <script type="module">
     import { initHome } from '/assets/app.js';

@@ -199,6 +199,54 @@ p {
   background-color: #28a745;
 }
 
+/* Selection footer */
+#selection-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--toolbar-bg);
+  border-top: 1px solid var(--border-color);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 1rem;
+  min-height: 80px;
+}
+
+#selection-footer button {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 1.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  touch-action: manipulation;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  min-height: 60px;
+  flex: 1;
+  max-width: 120px;
+}
+
+#selection-footer button:hover {
+  background-color: #357abd;
+}
+
+#selection-footer button.active {
+  background-color: #28a745;
+}
+
+/* Add bottom padding to main when footer is visible */
+body.selection-mode main {
+  padding-bottom: 100px;
+}
+
 /* Selected verse styling */
 #verse-list a.selected {
   background-color: #28a745 !important;

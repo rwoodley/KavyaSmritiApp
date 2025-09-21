@@ -375,6 +375,7 @@ export async function initHome() {
   const poemTitleEl = document.getElementById('poem-title');
   const verseListEl = document.getElementById('verse-list');
   const selectBtn = document.getElementById('select-btn');
+  const selectionFooter = document.getElementById('selection-footer');
   const playSelectedBtn = document.getElementById('play-selected-btn');
   const replaySelectedBtn = document.getElementById('replay-selected-btn');
   const loopSelectedBtn = document.getElementById('loop-selected-btn');
@@ -403,21 +404,21 @@ export async function initHome() {
     isSelectMode = !isSelectMode;
 
     if (isSelectMode) {
-      selectBtn.textContent = 'Done';
+      selectBtn.textContent = 'Cancel';
       selectBtn.classList.add('active');
-      playSelectedBtn.style.display = 'block';
-      replaySelectedBtn.style.display = 'block';
-      loopSelectedBtn.style.display = 'block';
+      selectionFooter.style.display = 'flex';
+      document.body.classList.add('selection-mode');
     } else {
       selectBtn.textContent = 'Select';
       selectBtn.classList.remove('active');
-      playSelectedBtn.style.display = 'none';
-      replaySelectedBtn.style.display = 'none';
-      loopSelectedBtn.style.display = 'none';
+      selectionFooter.style.display = 'none';
+      document.body.classList.remove('selection-mode');
       // Clear all selections and states
       selectedVerses.clear();
       isLooping = false;
+      isPlaying = false;
       loopSelectedBtn.classList.remove('active');
+      playSelectedBtn.textContent = '▶️';
       document.querySelectorAll('#verse-list a.selected').forEach(link => {
         link.classList.remove('selected');
       });
