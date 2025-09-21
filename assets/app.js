@@ -80,8 +80,8 @@ const sessionVisibility = {
 
 // Text scaling functions
 function applyTextScale(scale) {
-  // Clamp scale between 0.9 and 1.6
-  const clampedScale = Math.min(1.6, Math.max(0.9, scale));
+  // Clamp scale between 0.9 and 3.0
+  const clampedScale = Math.min(3.0, Math.max(0.9, scale));
   document.documentElement.style.setProperty('--verse-scale', clampedScale);
   return clampedScale;
 }
