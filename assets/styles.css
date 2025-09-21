@@ -188,6 +188,7 @@ p {
   min-width: 60px;
   min-height: 60px;
   transition: background-color 0.2s ease;
+  touch-action: manipulation;
 }
 
 /* Make all first row buttons consistent height */
