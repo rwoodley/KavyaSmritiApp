@@ -434,6 +434,59 @@ export async function initHome() {
     }
     // If not in select mode, allow normal navigation
   });
+
+  // Play selected verses functionality
+  playSelectedBtn.addEventListener('click', async () => {
+    if (selectedVerses.size === 0) {
+      return; // No verses selected
+    }
+
+    const audio = getAudioElement();
+    const selectedIds = Array.from(selectedVerses);
+
+    // Sort selected verse IDs by their order in the manifest
+    const sortedIds = selectedIds.sort((a, b) => {
+      const indexA = manifest.verses.findIndex(v => v.id === a);
+      const indexB = manifest.verses.findIndex(v => v.id === b);
+      return indexA - indexB;
+    });
+
+    playSelectedBtn.textContent = '⏸️'; // Change to pause icon
+
+    try {
+      for (const verseId of sortedIds) {
+        const audioSrc = `/data/Verse${verseId}.mp3`;
+        audio.src = audioSrc;
+
+        // Wait for the audio to load and play
+        await new Promise((resolve, reject) => {
+          const onEnded = () => {
+            audio.removeEventListener('ended', onEnded);
+            audio.removeEventListener('error', onError);
+            resolve();
+          };
+
+          const onError = () => {
+            audio.removeEventListener('ended', onEnded);
+            audio.removeEventListener('error', onError);
+            console.warn(`Audio not available for verse ${verseId}`);
+            resolve(); // Continue to next verse even if this one fails
+          };
+
+          audio.addEventListener('ended', onEnded);
+          audio.addEventListener('error', onError);
+
+          audio.play().catch(() => {
+            onError();
+          });
+        });
+      }
+    } catch (error) {
+      console.error('Error playing selected verses:', error);
+    } finally {
+      playSelectedBtn.textContent = '🔊'; // Reset to speaker icon
+    }
+  });
 }
 
 export async function initVerse() {
