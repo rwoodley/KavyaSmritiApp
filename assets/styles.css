@@ -178,16 +178,15 @@ p {
   background-color: var(--accent-color);
   color: white;
   border: none;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 0.5rem;
   border-radius: 4px;
   font-size: 0.85rem;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
   font-weight: 500;
   cursor: pointer;
   white-space: nowrap;
-  min-width: 120px;
+  min-width: 60px;
   min-height: 60px;
-  flex-shrink: 0;
   transition: background-color 0.2s ease;
 }
 
@@ -386,9 +385,9 @@ audio {
   }
   
   #toolbar button {
-    padding: 0.6rem 1.2rem;
+    padding: 0.6rem 0.4rem;
     font-size: 0.8rem;
-    min-width: 100px;
+    min-width: 50px;
     min-height: 50px;
   }
   
@@ -471,9 +470,9 @@ audio {
   }
   
   #toolbar button {
-    padding: 0.45rem 1rem;
+    padding: 0.45rem 0.3rem;
     font-size: 0.75rem;
-    min-width: 90px;
+    min-width: 45px;
     min-height: 45px;
   }
   
