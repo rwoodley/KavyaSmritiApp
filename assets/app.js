@@ -542,15 +542,23 @@ export async function initHome() {
     const audio = getAudioElement();
     const wasPlaying = isPlaying;
 
-    // Always stop current playback first and reset audio
+    // Always stop current playback first and clean up
     if (isPlaying) {
       audio.pause();
       isPlaying = false;
+      playSelectedBtn.textContent = '▶️';
     }
 
-    // Reset audio completely
+    // Remove any existing event listeners to prevent conflicts
+    audio.removeEventListener('ended', audio.onended);
+    audio.removeEventListener('error', audio.onerror);
+
+    // Reset audio completely and wait a moment for cleanup
     audio.src = '';
     audio.currentTime = 0;
+
+    // Small delay to ensure clean state
+    await new Promise(resolve => setTimeout(resolve, 50));
 
     // If it was playing, restart from beginning and continue playing
     if (wasPlaying) {
