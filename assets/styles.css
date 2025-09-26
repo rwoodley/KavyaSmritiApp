@@ -101,6 +101,7 @@ p {
   padding: 1rem 2rem;
   border-bottom: 1px solid var(--border-color);
   margin-bottom: 1rem;
+  gap: 1rem;
 }
 
 #poem-title {
@@ -115,24 +116,36 @@ p {
 }
 
 #select-btn {
-  background-color: var(--accent-color);
-  color: white;
+  background: none;
   border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-size: 1.9rem;
-  font-weight: 500;
+  padding: 0;
   cursor: pointer;
-  transition: background-color 0.2s ease;
   touch-action: manipulation;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.play-icon {
+  font-size: 1.2rem;
+  color: var(--accent-color);
+  transition: all 0.3s ease;
 }
 
 #select-btn:hover {
-  background-color: #357abd;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 #select-btn.active {
-  background-color: #28a745;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+#select-btn.active .play-icon {
+  color: var(--accent-color);
 }
 
 #play-selected-btn {

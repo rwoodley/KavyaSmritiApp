@@ -402,15 +402,16 @@ export async function initHome() {
   // Select button functionality
   selectBtn.addEventListener('click', () => {
     isSelectMode = !isSelectMode;
+    const iconEl = selectBtn.querySelector('.play-icon');
 
     if (isSelectMode) {
-      selectBtn.textContent = 'Cancel';
       selectBtn.classList.add('active');
+      iconEl.textContent = '✕';
       selectionFooter.style.display = 'flex';
       document.body.classList.add('selection-mode');
     } else {
-      selectBtn.textContent = 'Select';
       selectBtn.classList.remove('active');
+      iconEl.textContent = '▶';
       selectionFooter.style.display = 'none';
       document.body.classList.remove('selection-mode');
       // Clear all selections and states
