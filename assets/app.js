@@ -61,7 +61,7 @@ const sessionVisibility = {
       translit: false,
       english: false,
       explanation: false,
-      scale: 1.0
+      scale: 1.3
     };
   },
   
