@@ -685,6 +685,9 @@ export async function initVerse() {
       case 'incScale':
         incScale();
         break;
+      case 'goRandom':
+        goRandom(manifest, verseId);
+        break;
     }
   });
   
@@ -1090,6 +1093,25 @@ function goNext(nextId) {
   if (nextId) {
     location.href = `verse.html?id=${encodeURIComponent(nextId)}`;
   }
+}
+
+function goRandom(manifest, currentVerseId) {
+  if (!manifest || !manifest.verses || manifest.verses.length <= 1) {
+    return;
+  }
+
+  // Get all verse IDs except the current one
+  const otherVerses = manifest.verses.filter(verse => verse.id !== currentVerseId);
+
+  if (otherVerses.length === 0) {
+    return;
+  }
+
+  // Pick a random verse
+  const randomIndex = Math.floor(Math.random() * otherVerses.length);
+  const randomVerseId = otherVerses[randomIndex].id;
+
+  location.href = `verse.html?id=${encodeURIComponent(randomVerseId)}`;
 }
 
 function decScale() {
