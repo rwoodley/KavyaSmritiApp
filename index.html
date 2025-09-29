@@ -12,26 +12,48 @@
 
     <div id="poem-header">
       <span class="om-symbol">ॐ</span>
-      <div id="poem-title"></div>
-      <div id="select-controls">
-        <button id="select-btn" aria-label="Select verses">
-          <span class="play-icon">▶</span>
-        </button>
-      </div>
+      <div id="poem-title">Select a Chant</div>
     </div>
-    <ul id="verse-list"></ul>
+
+    <ul id="chant-list">
+      <li>
+        <a href="/01-VinayaChalisa.html" class="chant-link">
+          <div class="chant-title">Vinaya Chalisa</div>
+        </a>
+      </li>
+    </ul>
   </main>
 
-  <!-- Selection footer -->
-  <footer id="selection-footer" style="display: none;">
-    <button id="play-selected-btn">▶️</button>
-    <button id="replay-selected-btn">⏮️</button>
-    <button id="loop-selected-btn">🔁</button>
-  </footer>
-  
-  <script type="module">
-    import { initHome } from '/assets/app.js';
-    initHome();
-  </script>
+  <style>
+    #chant-list {
+      list-style: none;
+      padding: 0;
+      margin: 2rem 0;
+    }
+
+    #chant-list li {
+      margin-bottom: 1rem;
+    }
+
+    .chant-link {
+      display: block;
+      padding: 1.5rem;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: background-color 0.2s ease;
+      border: 1px solid var(--border-color);
+    }
+
+    .chant-link:hover {
+      background: var(--bg-hover);
+    }
+
+    .chant-title {
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+  </style>
 </body>
 </html>

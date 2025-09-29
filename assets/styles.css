@@ -110,8 +110,9 @@ p {
 
 .om-symbol {
   font-size: 2rem;
-  color: var(--text-color);
+  color: #4A90E2;
   font-weight: 400;
+  text-decoration: none;
 }
 
 /* Select controls */
