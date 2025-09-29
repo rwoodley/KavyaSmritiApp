@@ -1,3 +1,14 @@
+// Get the correct data path based on current location
+function getDataPath() {
+  const path = window.location.pathname;
+  // If we're in a subdirectory like /01-VinayaChalisa/, use relative path
+  if (path.includes('/01-VinayaChalisa/') || path.includes('/02-') || path.includes('/03-')) {
+    return 'data/';
+  }
+  // Otherwise use absolute path from root
+  return '/data/';
+}
+
 async function safeFetchText(url) {
   try {
     const response = await fetch(url);
@@ -11,7 +22,7 @@ async function safeFetchText(url) {
 }
 
 async function loadManifest() {
-  const manifestText = await safeFetchText('/data/manifest.json');
+  const manifestText = await safeFetchText(getDataPath() + 'manifest.json');
   if (!manifestText) {
     return null;
   }
@@ -116,7 +127,7 @@ async function showHindi() {
   hindiContainer.className = 'content-section';
   mainEl.appendChild(hindiContainer);
   
-  const hindiText = await safeFetchText(`/data/Verse${verseId}.hindi`);
+  const hindiText = await safeFetchText(`${getDataPath()}Verse${verseId}.hindi`);
   if (!hindiText) {
     hindiContainer.innerHTML = '<div class="placeholder">Hindi not available</div>';
     return;
@@ -143,7 +154,7 @@ async function showTranslit() {
   translitContainer.className = 'content-section';
   mainEl.appendChild(translitContainer);
   
-  const translitText = await safeFetchText(`/data/Verse${verseId}.transliterated`);
+  const translitText = await safeFetchText(`${getDataPath()}Verse${verseId}.transliterated`);
   if (!translitText) {
     translitContainer.innerHTML = '<div class="placeholder">Transliteration not available</div>';
     return;
@@ -170,7 +181,7 @@ async function showEnglish() {
   englishContainer.className = 'content-section';
   mainEl.appendChild(englishContainer);
   
-  const englishText = await safeFetchText(`/data/Verse${verseId}.english`);
+  const englishText = await safeFetchText(`${getDataPath()}Verse${verseId}.english`);
   if (!englishText) {
     englishContainer.innerHTML = '<div class="placeholder">English translation not available</div>';
     return;
@@ -200,7 +211,7 @@ async function showExplanation() {
   explanationContainer.className = 'content-section';
   mainEl.appendChild(explanationContainer);
   
-  const explanationText = await safeFetchText(`/data/Verse${verseId}.explanation`);
+  const explanationText = await safeFetchText(`${getDataPath()}Verse${verseId}.explanation`);
   if (!explanationText) {
     explanationContainer.innerHTML = '<div class="placeholder">Explanation not available for this verse</div>';
     return;
@@ -471,7 +482,7 @@ export async function initHome() {
         for (const verseId of sortedIds) {
           if (!isPlaying) break; // User clicked pause
 
-          const audioSrc = `/data/Verse${verseId}.mp3`;
+          const audioSrc = `${getDataPath()}Verse${verseId}.mp3`;
           audio.src = audioSrc;
 
           // Wait for the audio to load and play
@@ -576,7 +587,7 @@ export async function initHome() {
       if (sortedIds.length > 0) {
         // Set audio source to first verse but don't play
         const firstVerseId = sortedIds[0];
-        const audioSrc = `/data/Verse${firstVerseId}.mp3`;
+        const audioSrc = `${getDataPath()}Verse${firstVerseId}.mp3`;
         audio.src = audioSrc;
         audio.currentTime = 0;
       }
@@ -788,7 +799,7 @@ async function toggleHindi() {
   hindiContainer.innerHTML = '<p style="color: var(--text-secondary);">Loading Hindi...</p>';
   
   // Lazy-load Hindi content
-  const hindiText = await safeFetchText(`/data/Verse${verseId}.hindi`);
+  const hindiText = await safeFetchText(`${getDataPath()}Verse${verseId}.hindi`);
   
   if (!hindiText) {
     hindiContainer.innerHTML = '<div class="placeholder">Hindi not available</div>';
@@ -839,7 +850,7 @@ async function toggleSpeak() {
     }
     
     // Check if we need to load a new audio file
-    const expectedSrc = `/data/Verse${verseId}.mp3`;
+    const expectedSrc = `${getDataPath()}Verse${verseId}.mp3`;
     if (audio.src !== location.origin + expectedSrc) {
       audio.src = expectedSrc;
     }
@@ -913,7 +924,7 @@ async function toggleTranslit() {
   translitContainer.innerHTML = '<p style="color: var(--text-secondary);">Loading transliteration...</p>';
   
   // Lazy-load transliteration content
-  const translitText = await safeFetchText(`/data/Verse${verseId}.transliterated`);
+  const translitText = await safeFetchText(`${getDataPath()}Verse${verseId}.transliterated`);
   
   if (!translitText) {
     translitContainer.innerHTML = '<div class="placeholder">Transliteration not available</div>';
@@ -958,7 +969,7 @@ async function toggleEnglish() {
   englishContainer.innerHTML = '<p style="color: var(--text-secondary);">Loading English translation...</p>';
   
   // Lazy-load English content
-  const englishText = await safeFetchText(`/data/Verse${verseId}.english`);
+  const englishText = await safeFetchText(`${getDataPath()}Verse${verseId}.english`);
   
   if (!englishText) {
     englishContainer.innerHTML = '<div class="placeholder">English translation not available</div>';
@@ -1047,8 +1058,8 @@ async function toggleExplanation() {
   
   try {
     // Lazy-load explanation content
-    console.log(`Fetching: /data/Verse${verseId}.explanation`);
-    const explanationText = await safeFetchText(`/data/Verse${verseId}.explanation`);
+    console.log(`Fetching: ${getDataPath()}Verse${verseId}.explanation`);
+    const explanationText = await safeFetchText(`${getDataPath()}Verse${verseId}.explanation`);
     console.log('Explanation text:', explanationText);
     
     if (!explanationText) {
