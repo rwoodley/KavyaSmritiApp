@@ -45,8 +45,9 @@
     { "id": "38", "number": 38 },
     { "id": "39", "number": 39 },
     { "id": "40", "number": 40 },
-    { "id": "Outro01", "number": 41, "title": "Doha 1" },
-    { "id": "Outro02", "number": 42, "title": "Doha 2" }
+    { "id": "Outro01", "number": 41, "title": "Outro 1" },
+    { "id": "Outro02", "number": 42, "title": "Outro 2" },
+    { "id": "Outro03", "number": 43, "title": "Outro 3" }
   ]
 }
 
