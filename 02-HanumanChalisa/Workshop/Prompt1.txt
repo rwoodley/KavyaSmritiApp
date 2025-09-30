@@ -1,0 +1,17 @@
+in 02-HanumanChalisa/Workshop there is a file HanumanChalisa.pdf.
+It contains the text of the Hanuman Chalisa.
+there is 4 introductory verses, then the 40 verses of the Chalisa, followed by 2 concluding verses.
+For each verse, the text is 1) listed in Devanagiri, then 2) there is a transliteration into english, finally 3) there is an english translation.
+please extract all of the verses into separate files. 
+The intro verses should be named Intro01, Intro02, etc.
+The 40 Chalisa verses should be named Verse01, Verse02, etc.
+The final concluding verses should be Named Outro01, etc.
+So for each Intro/Verse/Outro there will be 3 files:
+
+VerseXX.hindi - with the Devanagiri text.
+VerseXX.transliteration
+VerseXX.english 
+
+Create these fils and put them in 02-HanumanChalisa/Data.
+Since there are 46 verses, there should be 138 files created.
+If you have quesitons, ask. 
